@@ -1,19 +1,23 @@
 pipeline {
     
 	agent any
-/*	
+
 	tools {
-        maven "maven3"
+        maven "MAVEN3.9"
+        jdk "JDK17"
     }
-*/	
+
     environment {
-        NEXUS_VERSION = "nexus3"
-        NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "172.31.40.209:8081"
-        NEXUS_REPOSITORY = "vprofile-release"
-	NEXUS_REPO_ID    = "vprofile-release"
-        NEXUS_CREDENTIAL_ID = "nexuslogin"
-        ARTVERSION = "${env.BUILD_ID}"
+        SNAP_REPO = 'vprofile-snapshot'
+        NEXUS_USER = 'admin'
+        NEXUS_PASSWORD = 'admin123'
+        RELEASE_REPO = 'vprofile-release'
+        CENTRAL_REPO = 'vpro-maven-central'
+        NEXUS_GRP_REPO = 'vpro-maven-group'
+        NEXUS_IP = '172.31.33.101'
+        NEXUS_PORT = '8081'
+        NEXUS_URL = "http://${NEXUS_IP}:${NEXUS_PORT}/repository"
+        NEXUS_LOGIN = 'nexuslogin'
     }
 	
     stages{
