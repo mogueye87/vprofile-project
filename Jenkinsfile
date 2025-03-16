@@ -20,10 +20,14 @@ pipeline {
         NEXUS_LOGIN = 'nexuslogin'
     }
 	
+    
     stages{
         stage('Build'){
             steps{
-                sh 'mvn -s setting.xml -DskipTests install'
+                configFileProvider([configFile(fileId: 'MySettings', variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn -s $MAVEN_SETTINGS clean package'
+                }
+                //sh 'mvn -s setting.xml -DskipTests install'
             }
         }
     }
