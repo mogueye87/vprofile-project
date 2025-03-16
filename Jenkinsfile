@@ -24,10 +24,8 @@ pipeline {
     stages{
         stage('Build'){
             steps{
-                configFileProvider([configFile(fileId: 'MySettings', variable: 'MAVEN_SETTINGS')]) {
-                    sh 'mvn -s $MAVEN_SETTINGS clean package'
-                }
-                //sh 'mvn -s setting.xml -DskipTests install'
+
+                sh 'mvn -sg setting.xml -DskipTests install'
             }
         }
     }
