@@ -56,7 +56,7 @@ pipeline {
             steps{
                 withSonarQubeEnv("${SONARSERVER}") {
                     sh '''
-                    sonar-scanner \
+                    ${scannerHome}/bin/sonar-scanner \
                     -Dsonar.exclusions="**/*.java" \
                     -Dsonar.projectKey="vprofile-project" \
                     -Dsonar.projectName="vprofile-project" \
