@@ -24,7 +24,7 @@ pipeline {
     stages{
         stage('Clone code'){
             steps{
-                git credentialsId: 'gitlogin', url: 'https://github.com/mogueye87/vprofile-project.git'
+                git credentialsId: 'gitlogin', url: 'https://github.com/mogueye87/vprofile-project.git', branch: 'main'
             }
         }       
         stage('Build'){
