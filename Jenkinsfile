@@ -3,7 +3,7 @@ pipeline {
 	agent any
 
 	tools {
-        maven "MAVEN3.8"
+        maven "MAVEN3.9"
         jdk "JDK17"
     }
 
@@ -22,11 +22,7 @@ pipeline {
 	
     
     stages{
-        stage('Clone code'){
-            steps{
-                git credentialsId: 'gitlogin', url: 'https://github.com/mogueye87/vprofile-project.git', branch: 'jenkins-ci'
-            }
-        }       
+               
         stage('Build'){
             steps{
                 sh 'mvn -s settings.xml -DskipTests install'
