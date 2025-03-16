@@ -54,18 +54,21 @@ pipeline {
                 scannerHome = tool "${SONARSCANNER}"
             }
             steps{
-                withSonarQubeEnv("${SONARSERVER}"){
+                withSonarQubeEnv("${SONARSERVER}") {
                     sh '''
-                    ${scannerHome}/bin/sonar-scanner -Dsonar.exclusions=**/*.java -Dsonar.projectKey=vprofile-project  
-                    -Dsonar.projectName=vprofile-project \
-                    -Dsonar.projectVersion=1.0 \
-                    -Dsonar.sources=src/ \
-                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                    -Dsonar.unitTest.reportPaths=target/surefire-reports/ \
-                    -Dsonar.jacoco.reportPaths=target/jacoco.exec \
-                    -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
+                    sonar-scanner \
+                    -Dsonar.exclusions="**/*.java" \
+                    -Dsonar.projectKey="vprofile-project" \
+                    -Dsonar.projectName="vprofile-project" \
+                    -Dsonar.projectVersion="1.0" \
+                    -Dsonar.sources="src/" \
+                    -Dsonar.java.binaries="target/test-classes/com/visualpathit/account/controllerTest/" \
+                    -Dsonar.unitTest.reportPaths="target/surefire-reports/" \
+                    -Dsonar.jacoco.reportPaths="target/jacoco.exec" \
+                    -Dsonar.java.checkstyle.reportPaths="target/checkstyle-result.xml"
                     '''
                 }
+
              }
         }
     }
