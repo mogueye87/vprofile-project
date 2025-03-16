@@ -22,9 +22,13 @@ pipeline {
 	
     
     stages{
+        stage('Clone code'){
+            steps{
+                git credentialsId: 'gitlogin', url: 'https://github.com/mogueye87/vprofile-project.git'
+            }
+        }       
         stage('Build'){
             steps{
-
                 sh 'mvn -s setting.xml -DskipTests install'
             }
         }
