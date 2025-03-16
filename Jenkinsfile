@@ -14,9 +14,9 @@ pipeline {
         RELEASE_REPO = 'vprofile-release'
         CENTRAL_REPO = 'vpro-maven-central'
         NEXUS_GRP_REPO = 'vpro-maven-group'
-        NEXUS_IP = '172.31.33.101'
-        NEXUS_PORT = '8081'
-        NEXUS_URL = "http://${NEXUS_IP}:${NEXUS_PORT}/repository"
+        NEXUSIP = '172.31.33.101'
+        NEXUSPORT = '8081'
+        NEXUS_URL = "http://${NEXUSIP}:${NEXUSPORT}/repository"
         NEXUS_LOGIN = 'nexuslogin'
     }
 	
