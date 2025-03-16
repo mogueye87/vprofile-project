@@ -18,6 +18,8 @@ pipeline {
         NEXUSPORT = '8081'
         NEXUS_URL = "http://${NEXUSIP}:${NEXUSPORT}/repository"
         NEXUS_LOGIN = 'nexuslogin'
+        SONARSERVER='sonarserver'
+        SONARSCANNER='sonarscanner'
     }
 	
     
@@ -40,10 +42,28 @@ pipeline {
                 sh 'mvn -s settings.xml test'
             }
         }
-        
-        stage('Check style'){
+
+        stage('Checkstyle Analysis'){
             steps{
                 sh 'mvn -s settings.xml checkstyle:checkstyle'
+            }
+        }
+
+        stage('SonarQube Analysis'){
+            environment {
+                scannerHome = tool "${SONARSCANNER}"
+            }
+            steps{
+                withSonarQubeEnv("${SONARSERVER}"){
+                    sh '''${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=vprofile-project \   
+                    -Dsonar.projectName=vprofile-project \
+                    -Dsonar.projectVersion=1.0 \
+                    -Dsonar.sources=src/ \
+                    -Dsonar.java.binaries=test-classes/com/visualpathit/account/controllerTest \
+                    -Dsonar.unitTest.reportPaths=target/surefire-reports \
+                    -Dsonar.jacoco.reportPaths=target/jacoco.exec \
+                    -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
             }
         }
     }
