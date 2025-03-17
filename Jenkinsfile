@@ -81,5 +81,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Upload artefacts'){
+            steps{
+                script{
+                    def artifact = findFiles(glob: '**/*.war')
+                    def artifactPath = artifact[0].path
+                    def artifactName = artifact[0].name
+                    echo "Artifact Path: ${artifactPath}"
+                    echo "Artifact Name: ${artifactName}"
+                    sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${artifactPath} ${NEXUS_URL}/${RELEASE_REPO}/${artifactName}"
+                }
+            }
+        }
     }
 }
