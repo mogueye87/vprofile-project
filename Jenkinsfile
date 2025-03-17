@@ -82,24 +82,47 @@ pipeline {
             }
         }
 
-        stage('Upload artefacts'){
-            steps{
-                script{
-                    sh 'ls -l'
-                    // use pipeline step plugin to find the war file
-                    // Find the war file returned by the build
-                    def artifact = findFiles(glob: '**/*.war')
-                    // Get the path and name of the artifact
-                    def artifactPath = artifact[0].path
-                    // Get the name of the artifact
-                    def artifactName = artifact[0].name
+       
+    // stage('Upload artefacts'){ //start of upload artefacts
+    //         steps{
+    //             script{
+    //                 sh 'ls -l'
+    //                 // use pipeline step plugin to find the war file
+    //                 // Find the war file returned by the build
+    //                 def artifact = findFiles(glob: '**/*.war')
+    //                 // Get the path and name of the artifact
+    //                 def artifactPath = artifact[0].path
+    //                 // Get the name of the artifact
+    //                 def artifactName = artifact[0].name
 
-                    echo "Artifact Path: ${artifactPath}"
-                    echo "Artifact Name: ${artifactName}"
-                    // Upload the artifact to Nexus
-                    sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${artifactPath} ${NEXUS_URL}/nexus/${RELEASE_REPO}/${artifactName}"
-                }
+    //                 echo "Artifact Path: ${artifactPath}"
+    //                 echo "Artifact Name: ${artifactName}"
+    //                 // Upload the artifact to Nexus
+    //                 sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${artifactPath} ${NEXUS_URL}/nexus/${RELEASE_REPO}/${artifactName}"
+    //             }
+    //         }
+    //     } //end of upload artefacts
+
+    stage('Upload artefacts'){
+        steps{
+            script{
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
+                    groupId: 'QA',
+                    version: "${ENV.BUILD_NUMBER}-${ENV.BUILD_TIMESTAMP}",
+                    repository: "${RELEASE_REPO}",
+                    credentialsId: "${NEXUS_LOGIN}",
+                    artifacts: [
+                        [artifactId: "vprofile",
+                        classifier: '',
+                        file: 'target/vprofile.war',
+                        type: 'war']
+                    ]
+            )
             }
         }
+    
     }
 }
