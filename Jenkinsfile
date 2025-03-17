@@ -85,11 +85,18 @@ pipeline {
         stage('Upload artefacts'){
             steps{
                 script{
+                    sh 'ls -l'
+                    // use pipeline step plugin to find the war file
+                    // Find the war file returned by the build
                     def artifact = findFiles(glob: '**/*.war')
+                    // Get the path and name of the artifact
                     def artifactPath = artifact[0].path
+                    // Get the name of the artifact
                     def artifactName = artifact[0].name
+
                     echo "Artifact Path: ${artifactPath}"
                     echo "Artifact Name: ${artifactName}"
+                    // Upload the artifact to Nexus
                     sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${artifactPath} ${NEXUS_URL}/${RELEASE_REPO}/${artifactName}"
                 }
             }
