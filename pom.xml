@@ -296,10 +296,23 @@
 <!--            </plugin>-->
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>${RELEASE_REPO}</id>
+            <url>http://${NEXUSIP}:${NEXUSPORT}/repository/${RELEASE_REPO}/</url>
+        </repository>
+        <snapshotRepository>
+            <id>${SNAP_REPO}</id>
+            <url>http://${NEXUSIP}:${NEXUSPORT}/repository/${SNAP_REPO}/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <repositories>
     <repository>
       <id>${NEXUS-GRP-REPO}</id>
       <url>http://${NEXUSIP}:${NEXUSPORT}/repository/${NEXUS-GRP-REPO}/</url>
     </repository>
   </repositories>
+  
 </project>
