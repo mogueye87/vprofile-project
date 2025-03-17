@@ -74,7 +74,9 @@ pipeline {
 
         stage('Quality Gate'){
             steps{
+                // Reuse the Quality Gate status from the SonarQube analysis
                 timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether the build should be failed if the Quality Gate fails
                     waitForQualityGate abortPipeline: true
                 }
             }
