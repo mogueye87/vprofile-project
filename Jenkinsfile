@@ -111,13 +111,14 @@ pipeline {
                     protocol: 'http',
                     nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
                     groupId: 'QA',
+                    // user time stamp plugin to make the version unique
                     version: "${env.BUILD_NUMBER}-${env.BUILD_TIMESTAMP}",
                     repository: "${RELEASE_REPO}",
                     credentialsId: "${NEXUS_LOGIN}",
                     artifacts: [
                         [artifactId: "vprofile",
                         classifier: '',
-                        file: 'target/vprofile.war',
+                        file: 'target/vprofile-v2.war',
                         type: 'war']
                     ]
             )
