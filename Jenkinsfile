@@ -97,7 +97,7 @@ pipeline {
                     echo "Artifact Path: ${artifactPath}"
                     echo "Artifact Name: ${artifactName}"
                     // Upload the artifact to Nexus
-                    sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${artifactPath} ${NEXUS_URL}/${RELEASE_REPO}/${artifactName}"
+                    sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${artifactPath} ${NEXUS_URL}/nexus/${RELEASE_REPO}/${artifactName}"
                 }
             }
         }
